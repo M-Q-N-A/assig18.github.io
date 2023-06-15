@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignInForm</title>
+</head>
+<style>
+    .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .form {
+        background-color: blue;
+        padding: 20px;
+        border-radius: 5px;
+    }
+
+    .divgroup {
+        
+        margin-bottom: 10px;
+    }
+
+    label {
+        text-decoration: underline;
+        margin: 5px;
+        display: block;
+        font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="number"] {
+        width: 100%;
+        padding: 5px;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+    }
+
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button[type="submit"] {
+        margin-top: 10px;
+    }
+    .sig{
+        color: wheat;
+    }
+
+    .bodyy {
+        background-color: black;
+    }
+</style>
+
+<body class="bodyy">
+    <div class="container">
+        <form id="signup-form" class="form">
+            <h1 id="sign_hd" class="sig">Sign Up</h1>
+            <div class="divgroup">
+                <label for="firstName">First Name</label>
+                <input type="text" id="firstName" placeholder="First Name" required>
+            </div>
+            <div class="divgroup">
+                <label for="lastName">Last Name</label>
+                <input type="text" id="lastName" placeholder="Last Name" required>
+            </div>
+            <div class="divgroup">
+                <label for="age">Age</label>
+                <input type="number" id="age" placeholder="Age" required>
+            </div>
+            <div class="divgroup">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Email@gmail.com" required>
+            </div>
+            <div class="divgroup">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Password" required>
+            </div>
+            <div class="divgroup">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+            </div>
+            <p id="err"></p>
+            <button type="button" id="btn1" onclick="createAccount()">Submit</button>
+            <button type="button" onclick="userLogin()">Sign In</button>
+            <button type="button" id="btn2" onclick="clr()">Clear All</button>
+        </form>
+    </div>
+
+    <script>
+        let persons = [{
+            name: "muhammad",
+            lastname: "qasim",
+            age: "28",
+            email: "qasim@gmail.com",
+            password: "123456",
+            confirmpassword: "123456",
+        }];
+
+        function clr() {
+            let inputs = document.getElementsByTagName("input");
+            for (let i = 0; i < inputs.length; i++) {
+                inputs[i].value = "";
+            }
+        }
+
+        function createAccount() {
+            let name = document.getElementById("firstName").value;
+            let lastname = document.getElementById("lastName").value;
+            let age = document.getElementById("age").value;
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+            let confirmPassword = document.getElementById("confirmPassword").value;
+
+            if (name !== "" && lastname !== "" && age !== "" && email !== "" && password !== "" && confirmPassword !== "") {
+                document.getElementById("err").innerText = "";
+                confirm("Signup form submitted");
+
+                let user = persons.find(function (person) {
+                    return person.email === email;
+                });
+
+                if (user) {
+                    alert("User with the same email already exists.");
+                }
+                else {
+                    persons.push({
+                        name: name,
+                        lastname: lastname,
+                        age: age,
+                        email: email,
+                        password: password,
+                        confirmpassword: confirmPassword,
+                    });
+
+                    console.log(persons);
+                    clr();
+                    document.getElementById("sign_hd").innerText = "Log In";
+                    document.getElementById("btn1").style.display = "none";
+                    document.getElementById("btn2").style.display = "none";
+                    document.getElementById("firstName").style.display = "none";
+                    document.getElementById("lastName").style.display = "none";
+                    document.getElementById("age").style.display = "none";
+                    document.getElementById("confirmPassword").style.display = "none";
+                    document.querySelectorAll('label').forEach(function (label) {
+                        label.style.display = "none";
+                    });
+                }
+            } else {
+                document.getElementById("err").innerText = "Please fill in all fields.";
+            }
+        }
+        function userLogin() {
+            document.getElementById("btn1").style.display = "none";
+            document.getElementById("btn2").style.display = "none";
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+
+            let user = persons.find(function (person) {
+                return person.email === email && person.password === password;
+            });
+
+            if (user) {
+                alert("Logged in successfully!");
+            }
+            else {
+                alert("Invalid email or password");
+            }
+
+            clr();
+
+            document.getElementById("sign_hd").innerText = "Log In";
+            document.getElementById("firstName").style.display = "none";
+            document.getElementById("lastName").style.display = "none";
+            document.getElementById("age").style.display = "none";
+            document.getElementById("confirmPassword").style.display = "none";
+            document.querySelectorAll('label').forEach(function (label) {
+                label.style.display = "none";
+            });
+        }
+
+    </script>
+</body>
+
+</html>
