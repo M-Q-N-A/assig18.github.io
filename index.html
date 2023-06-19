@@ -28,6 +28,7 @@
 
     label {
         text-decoration: underline;
+        color: wheat;
         margin: 5px;
         display: block;
         font-weight: bold;
@@ -60,7 +61,7 @@
     }
 
     .bodyy {
-        background-color: black;
+        background-color: rgb(0, 0, 0);
     }
 </style>
 
@@ -124,9 +125,14 @@
             let password = document.getElementById("password").value;
             let confirmPassword = document.getElementById("confirmPassword").value;
 
+            let Name = firstName + " " + lastName;
+
             if (name !== "" && lastname !== "" && age !== "" && email !== "" && password !== "" && confirmPassword !== "") {
                 document.getElementById("err").innerText = "";
-                confirm("Signup form submitted");
+                if (password !== confirmPassword) {
+                    alert("Password and Confirm Password do not match.");
+                }
+                
 
                 let user = persons.find(function (person) {
                     return person.email === email;
